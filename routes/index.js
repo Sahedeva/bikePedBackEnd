@@ -8,6 +8,21 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Street Life, Saves Lives' });
 });
 
+/* GET user Routes */
+router.get('/routes', function(req, res, next) {
+  Route.find({}, function(err, routes){
+    res.json(routes);
+  });
+});
+
+/* GET user Routes */
+router.get('/routes/:name', function(req, res, next) {
+  var userid = req.params.name;
+  Route.find({userid:userid}, function(err, routes){
+    res.json(routes);
+  });
+});
+
 /* GET map page. */
 router.get('/map', function(req, res, next) {
   res.render('map', { title: 'Street Life, Saves Lives' });
