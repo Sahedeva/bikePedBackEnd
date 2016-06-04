@@ -7,6 +7,20 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Street Life, Saves Lives' });
 });
 
+/* GET map page. */
+router.get('/map', function(req, res, next) {
+  res.render('map', { title: 'Street Life, Saves Lives' });
+});
+
+/* GET test page. */
+router.get('/test', function(req, res, next) {
+  res.render('test', { title: 'Street Life, Saves Lives' });
+});
+
+/* GET googleMaps page. */
+router.get('/googleMaps', function(req, res, next) {
+  res.render('googleMaps', { title: 'Street Life, Saves Lives' });
+});
 
 router.post('/test', function(req, res, next) {
 	// Create a new user 
@@ -18,8 +32,13 @@ router.post('/test', function(req, res, next) {
 	// Save the user
   buddy.save(function(err) {
     if (err) console.log(err);
-
-    res.send('User created!');
+    User.findOne({
+        name: 'Buddy'
+      }, function(err, user) {
+        if (err) console.log(err);
+        console.log(user._id);
+        res.send(user._id);
+      });
   });
 });
 
@@ -36,9 +55,15 @@ router.post('/new', function(req, res, next) {
 
     // Save the user
     newUser.save(function(err) {
-        if (err) console.log(err);
+      if (err) console.log(err);
 
-        res.send('User created!');
+      User.findOne({
+        name: name
+      }, function(err, user) {
+        if (err) console.log(err);
+        console.log(user._id);
+        res.send(user._id);
+      });
     });
 });
 
