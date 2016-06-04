@@ -23,4 +23,24 @@ router.post('/test', function(req, res, next) {
   });
 });
 
+router.post('/new', function(req, res, next) {
+    var name = req.body.name;
+    var email = req.body.email;
+    var favorite = req.body.favorite;     
+
+    var newUser = User({
+        name: name,
+        email: email,
+        favorite: favorite,
+    });
+
+    // Save the user
+    newUser.save(function(err) {
+        if (err) console.log(err);
+
+        res.send('User created!');
+    });
+});
+
+
 module.exports = router;
