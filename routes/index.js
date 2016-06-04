@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
+var Route = require('../models/route'); 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -20,6 +21,22 @@ router.get('/test', function(req, res, next) {
 /* GET googleMaps page. */
 router.get('/googleMaps', function(req, res, next) {
   res.render('googleMaps', { title: 'Street Life, Saves Lives' });
+});
+
+/* POST a route collection, which consists of a userid and list of location points */
+router.post('/route', function (req, res, next) {    
+    var route = new Route({
+      userid: req.body.userid, 
+      location: req.body.location
+    });
+
+    // Save the user
+    route.save(function (err) {
+        if (err) console.log(err);
+
+        res.send('Map route created!');
+        console.log(route); 
+    });
 });
 
 router.post('/test', function(req, res, next) {
