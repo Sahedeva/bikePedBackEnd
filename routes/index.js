@@ -44,6 +44,7 @@ router.post('/route', function (req, res, next) {
     });
 });
 
+
 router.post('/test', function(req, res, next) {
   // Create a new user 
   var buddy = new User({
