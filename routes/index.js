@@ -54,6 +54,15 @@ router.post('/route', function (req, res, next) {
     });
 });
 
+router.get('/route/:id', function(req, res, next) {
+  var id = req.params.id;
+  Route.findOne({ _id:req.params.id }, function(err, route) {
+    if (err) console.log(err);
+
+    res.json(route);
+  });
+});
+
 router.post('/test', function(req, res, next) {
 	// Create a new user 
 	var buddy = new User({
