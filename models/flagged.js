@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var flaggedSchema = new mongoose.Schema({
-	location: []
+	location: {}
 });
 
 var Flagged = mongoose.model('Flagged', flaggedSchema);
