@@ -50,7 +50,7 @@ router.post('/route', function (req, res, next) {
     var flagged; 
 
    location.forEach(function(data) {
-    if(data.comment !== undefined || data.comment != '' || data.comment != null || data.comment.length != 0) { 
+    if(data.comment !== undefined && data.comment.length != 0) { 
       console.log("Comment found - " + data.comment); 
 
       flagged = new Flagged({
