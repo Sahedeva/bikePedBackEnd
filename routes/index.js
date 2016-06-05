@@ -39,13 +39,22 @@ router.get('/googleMaps', function(req, res, next) {
 });
 
 /* POST a route collection, which consists of a userid and list of location points */
-router.post('/route', function (req, res, next) {    
+router.post('/route', function (req, res, next) {
+    var location = JSON.parse(req.body.location)    
     var route = new Route({
       userid: req.body.userid, 
-      location: req.body.location
+      location: location
     });
 
-    // Save the user
+   location.forEach(function(data){
+    if(data.comment) {
+      console.log("Comment"); 
+      console.log(data.comment); 
+      
+    }
+   }); 
+
+    // Save the route
     route.save(function (err) {
         if (err) console.log(err);
 
