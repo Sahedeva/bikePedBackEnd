@@ -41,7 +41,7 @@ router.get('/googleMaps', function(req, res, next) {
 
 /* POST a route collection, which consists of a userid and list of location points */
 router.post('/route', function (req, res, next) {
-    var location = JSON.parse(req.body.location)    
+    var location = req.body.location;   
     var route = new Route({
       userid: req.body.userid, 
       location: location
