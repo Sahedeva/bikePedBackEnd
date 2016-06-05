@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user');
 var Route = require('../models/route'); 
+var Flagged = require('../models/flagged'); 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -39,13 +40,32 @@ router.get('/googleMaps', function(req, res, next) {
 });
 
 /* POST a route collection, which consists of a userid and list of location points */
-router.post('/route', function (req, res, next) {    
+router.post('/route', function (req, res, next) {
+    var location = JSON.parse(req.body.location)    
     var route = new Route({
       userid: req.body.userid, 
-      location: req.body.location
+      location: location
     });
 
-    // Save the user
+    var flagged; 
+
+   location.forEach(function(data) {
+    if(typeof data.comment != 'undefined' || data.comment != '' || data.comment != null || data.comment.length != 0) { 
+      console.log("Comment found - " + data.comment); 
+
+      flagged = new Flagged({
+        location: location
+      }); 
+
+      flagged.save(function(err){
+        if(err) console.log(err); 
+
+        console.log("Comment saved - " + data.comment); 
+      });       
+    }
+   }); 
+
+    // Save the route
     route.save(function (err) {
         if (err) console.log(err);
 
