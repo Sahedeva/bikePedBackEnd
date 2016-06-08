@@ -16,6 +16,13 @@ router.get('/routes', function(req, res, next) {
   });
 });
 
+/* GET flagged Routes */
+router.get('/problemRoutes', function(req, res, next) {
+  Flagged.find({}, function(err, routes){
+    res.json(routes);
+  });
+});
+
 /* GET user Routes */
 router.get('/routes/:name', function(req, res, next) {
   var userid = req.params.name;
