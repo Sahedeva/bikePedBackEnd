@@ -9,6 +9,11 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Street Life, Saves Lives' });
 });
 
+/* GET seed page. */
+router.get('/seed', function(req, res, next) {
+  res.render('seed', { title: 'Street Life, Saves Lives' });
+});
+
 /* GET user Routes */
 router.get('/routes', function(req, res, next) {
   Route.find({}, function(err, routes){
@@ -45,6 +50,44 @@ router.get('/test', function(req, res, next) {
 router.get('/googleMaps', function(req, res, next) {
   res.render('googleMaps', { title: 'Street Life, Saves Lives' });
 });
+
+/* POST seed data for flagged database */
+router.post('/seedFlags', function (req, res, next) {
+  var problemFlags = [
+    {
+      "comment": "Bad lighting",
+      "longitude": -97.75619409987493,
+      "latitude": 30.22982723082437
+    },
+    {
+      "comment": "Construction",
+      "longitude": -97.75469767870172,
+      "latitude": 30.22905521563275
+    },
+    { 
+      "comment": "Pothole",
+      "longitude": -97.75709766903682,
+      "latitude": 30.23074982690646
+    },
+    {
+      "comment": "Needs stop sign",
+      "longitude": -97.7569041308926,
+      "latitude": 30.23111175748541
+    }
+  ];
+  for(var i = 0;i<4;i++){
+    var flagged = new Flagged({
+          location: problemFlags[i]
+        });
+
+    flagged.save(function(err){
+      if(err) console.log(err); 
+
+      console.log("Flag seeded"); 
+    });
+  }
+  res.json("Flag seeded");
+});        
 
 /* POST a route collection, which consists of a userid and list of location points */
 router.post('/route', function (req, res, next) {
